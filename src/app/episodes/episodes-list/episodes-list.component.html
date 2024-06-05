@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 d-flex flex-wrap justify-content-center">
+        @for (episode of episodes; track $index) {
+        <div
+          class="card mb-3"
+          style="width: 18rem; margin: 10px"
+        >
+          <div class="card-body">
+            <h5 class="card-title">{{ episode.name }}</h5>
+            <p class="card-text">Date: {{ episode.air_date }}</p>
+            <p class="card-text">Species: {{ episode.episode }}</p>
+            <p class="card-text">Create: {{ episode.created }}</p>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+  </div>

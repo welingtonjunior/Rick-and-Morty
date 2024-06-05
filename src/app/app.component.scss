@@ -1,0 +1,26 @@
+.navbar {
+    background-color: #6DBB1A;
+    z-index: 10000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.nav-link {
+    color: hsl(0, 14%, 90%);
+}
+.nav-item{
+    display: flex;
+    align-items: center;
+    padding-right: 20px;
+}
+.container {
+    background-size: cover; 
+    background-repeat: no-repeat;
+    background-position: center; 
+    width: 100%;
+    min-height: 100vh;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    display: flex;
+    justify-content: center;
+}
+

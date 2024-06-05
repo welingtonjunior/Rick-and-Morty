@@ -1,0 +1,11 @@
+<nav class="navbar">
+  <div class="container-fluid">
+    <form class="d-flex">
+      <input class="form-control me-2 custom-search-input" type="search" [placeholder]="placeholderText" aria-label="Search" [formControl]="search" list="charactersList">
+      <datalist id="charactersList">
+        <option *ngFor="let character of characters" [value]="character.name"></option>
+        <option *ngFor="let episode of episodes" [value]="episode.name"></option>
+      </datalist>
+    </form>
+  </div>
+</nav>
