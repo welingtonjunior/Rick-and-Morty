@@ -1,27 +1,97 @@
-# RickAndMortyDashboard
+# Rick and Morty Dashboard
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.6.
+## Descrição
 
-## Development server
+Este projeto é um dashboard que permite aos usuários buscar e visualizar informações sobre personagens e episódios da série Rick and Morty. O projeto utiliza autenticação mockada, gerenciamento de estado com NgRx, programação reativa com RxJS, a API do Rick and Morty para dados, e estilização com Bootstrap.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Tecnologias Utilizadas
 
-## Code scaffolding
+- **Angular**: Framework para construção de aplicações web.
+- **NgRx**: Biblioteca para gerenciamento de estado baseado em Redux.
+- **RxJS**: Biblioteca para programação reativa com Observables.
+- **API do Rick and Morty**: Fonte de dados para personagens e episódios.
+- **Bootstrap**: Framework SCSS para estilização responsiva.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Funcionalidades
 
-## Build
+- **Autenticação Mockada**: Sistema de login simulado para demonstração de autenticação.
+- **Busca de Personagens e Episódios**: Barra de busca para encontrar personagens e episódios por nome.
+- **Paginação**: Navegação entre páginas de resultados.
+- **Gerenciamento de Estado**: Utilização do NgRx para gerenciar o estado da aplicação.
+- **Programação Reativa**: Uso de RxJS para lidar com eventos assíncronos.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Instalação e Execução
 
-## Running unit tests
+Siga os passos abaixo para instalar e executar o projeto localmente:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+1. **Clone o repositório:**
+   ```sh
+   git clone https://github.com/seu-usuario/rick-and-morty-dashboard.git
+   cd rick-and-morty-dashboard
 
-## Running end-to-end tests
+2. **Instale as dependências:**
+    ```npm install
+    
+3. **Execute a aplicação:**
+    ```ng serve
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+4. **Acesse a aplicação:**
+    Abra o navegador e vá para http://localhost:4200
 
-## Further help
+## Credenciais de Acesso
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+    Utilize as seguintes credenciais para acessar a aplicação:
+
+    Usuário: WelingtonJunior
+    Senha: W1234
+
+## Estrutura do Projeto
+
+A estrutura do projeto está organizada de acordo com style guide: https://angular.dev/style-guide/   - segue:
+```sh
+    src/
+    app/
+        auth/
+        auth.service.ts        # Serviço para autenticação mockada
+        auth.guard.ts          # Guarda de rota para proteger rotas autenticadas
+        core/
+        services/
+            api.service.ts       # Serviço para comunicação com a API do Rick and Morty
+        shared/
+        components/
+            search-bar/
+            search-bar.component.ts  # Componente da barra de busca
+        actions/
+            load-characters.action.ts  # Ações relacionadas ao carregamento de personagens
+        effects/
+            characters.effects.ts      # Efeitos para gerenciar as ações de personagens
+        reducers/
+            load-characters.reducer.ts # Redutor para gerenciar o estado dos personagens
+        selectors/
+            load-characters.selector.ts# Selectors para selecionar o estado dos personagens
+    assets/
+    environments/
+```
+
+## Fluxo de trabaho
+
+# Autenticação:
+
+- O usuário faz login utilizando as credenciais fornecidas.
+A autenticação é gerenciada pelo auth.service.ts.
+Carregamento de Dados:
+
+- A aplicação utiliza o api.service.ts para buscar dados da API do Rick and Morty.
+A busca por personagens e episódios é feita através da barra de busca (search-bar.component.ts).
+Gerenciamento de Estado:
+
+- As ações (definidas em load-characters.action.ts) disparam eventos que são gerenciados pelos efeitos (characters.effects.ts) e redutores (load-characters.reducer.ts).
+O estado da aplicação é selecionado usando selectors (load-characters.selector.ts).
+Navegação:
+
+- A aplicação utiliza roteamento do Angular para navegar entre páginas de personagens e episódios.
+A paginação permite ao usuário navegar entre diferentes páginas de resultados.
+
+# Estilização
+
+- A aplicação utiliza o Bootstrap para estilização responsiva e para componentes de UI

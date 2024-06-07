@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { SearchBarComponent } from './shared/components/search-bar/search-bar.component';
 import { CommonModule } from '@angular/common';
+import { Store, select } from '@ngrx/store';
+import { selectCharacters } from './shared/selector/load-characters.selector';
 
 @Component({
   selector: 'app-root',
@@ -11,5 +13,17 @@ import { CommonModule } from '@angular/common';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
- 
+  public dataCharacters$ = this.store.pipe(select(selectCharacters));
+  public loading: boolean = false;
+  
+  constructor(private store: Store){
+    this.handleLoading()
+  }
+
+  handleLoading(): void {
+    this.dataCharacters$.subscribe(data =>
+      this.loading = data.loading
+    )
+  }
+
 }

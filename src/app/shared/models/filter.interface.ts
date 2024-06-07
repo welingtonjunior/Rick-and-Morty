@@ -6,4 +6,6 @@ export interface FilterCharacters {
     species?: string;
     type?: string;
     gender?: string;
+    id?: number;
+    [key: string]: any;
 }

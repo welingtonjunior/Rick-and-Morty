@@ -1,5 +1,5 @@
 .navbar {
-    background-color: #6DBB1A;
+    background-color: #24325FFF;
     z-index: 10000;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -7,20 +7,26 @@
 .nav-link {
     color: hsl(0, 14%, 90%);
 }
+.spinner-border{
+    display: flex;
+    align-items: center;
+    padding-right: 40px;
+    margin-top: 3px;
+}
 .nav-item{
     display: flex;
     align-items: center;
     padding-right: 20px;
 }
-.container {
-    background-size: cover; 
-    background-repeat: no-repeat;
-    background-position: center; 
+.router {
     width: 100%;
+    height: 100vh;
     min-height: 100vh;
-    padding-top: 30px;
-    padding-bottom: 30px;
     display: flex;
     justify-content: center;
 }
-
+.logo {
+    font-size: 1.4rem;
+    margin-bottom: 4px;
+    color: #B7E4F9FF;
+}

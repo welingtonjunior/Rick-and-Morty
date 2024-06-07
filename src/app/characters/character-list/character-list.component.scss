@@ -1,34 +1,52 @@
+
 .container {
-    padding: 30px;
-    perspective: 1000px; 
-  }
-  
-  .card {
-    margin: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    background-color: #20232a; 
-    color: #f0f0f0; 
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    transform-style: preserve-3d; 
-  }
-  
-  .card:hover {
-    transform: scale(1.1) translateZ(20px); 
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6); 
-  }
-  
-  .card-title {
-    color: #ffd700;
-  }
-  
-  .full-height-container {
-    min-height: 100vh;
-    padding-top: 30px;
-    padding-bottom: 30px;
-  }
-  .pagination-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
+  padding: 30px;
+  perspective: 1000px;
+}
+.spinner-border{
+  padding: 50px;
+  z-index: 1000;
+}
+.card {
+  margin: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: #20232a;
+  color: #f0f0f0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform-style: preserve-3d;
+}
+
+.card:hover {
+  transform: scale(1.1) translateZ(20px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+}
+
+.card-title {
+  color: #ffd700;
+}
+
+.full-height-container {
+  min-height: 100vh;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.pagination-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination .page-item.disabled .page-link {
+  cursor: not-allowed;
+  background-color: #f8f9fa;
+  border-color: #dee2e6;
+}
+
+.pagination .page-item.active .page-link {
+  z-index: 1;
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
 }

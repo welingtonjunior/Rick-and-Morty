@@ -1,42 +1,68 @@
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-12 d-flex flex-wrap justify-content-center">
-      @for (character of characters; track $index) {
-        <a [routerLink]="'/details'" [queryParams]="{id: character.id}">
-        <div data-toggle="tooltip"  data-placement="top" title="Clique para ver os detalhes"
-        class="card mb-3"
-        style="width: 18rem; margin: 10px"
-        >
-        <img
-        class="card-img-top"
-        [src]="character.image"
-        alt="Character Image"
-        />
-        <div class="card-body">
-          <h5 class="card-title">{{ character.name }}</h5>
-          <p class="card-text">Origin: {{ character.origin.name }}</p>
-          <p class="card-text">Species: {{ character.species }}</p>
-          <p class="card-text">Status: {{ character.status }}</p>
-        </div>
+<section>
+  <div class="container" *ngIf="!error">
+    <div class="row justify-content-center">
+      <div class="col-12 d-flex flex-wrap justify-content-center">
+        <ng-container *ngFor="let character of characters">
+          <a [routerLink]="['/characters/details', character.id]">
+            <div
+              data-toggle="tooltip"
+              data-placement="top"
+              title="Clique para ver os detalhes"
+              class="card mb-3"
+              style="width: 13rem; margin: 10px"
+            >
+              <img
+                class="card-img-top"
+                [src]="character.image"
+                alt="Character Image"
+              />
+              <div class="card-body">
+                <h5 class="card-title">{{ character.name }}</h5>
+              </div>
+            </div>
+          </a>
+        </ng-container>
       </div>
-      </a>
-      }
     </div>
   </div>
-</div>
-<div class="pagination-container">
-  <nav aria-label="Page navigation">
-    <ul class="pagination justify-content-center">
-      <li class="page-item"><a class="page-link" href="#">Anterior</a></li>
-      @for (page of pages; track $index) {
-        <li class="page-item"><a class="page-link" href="#">{{page}}</a></li>
-      }
-      <li class="page-item"><a class="page-link" href="#">Próximo</a></li>
-    </ul>
-  </nav>
-</div>
-@if (error) {
-  <div class="alert alert-warning" role="alert">
-    {{error}}
+  <div *ngIf="!error && !loading" class="pagination-container">
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <button
+            class="page-link"
+            (click)="previousPage()"
+            [disabled]="currentPage === 1"
+          >
+            Anterior
+          </button>
+        </li>
+        <li
+          *ngFor="let page of visiblePages"
+          class="page-item"
+          [class.active]="page === currentPage"
+        >
+          <button class="page-link" (click)="goToPage(page)">{{ page }}</button>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <button
+            class="page-link"
+            (click)="nextPage()"
+            [disabled]="currentPage === totalPages"
+          >
+            Próximo
+          </button>
+        </li>
+      </ul>
+    </nav>
   </div>
-}
+</section>
+
+<div *ngIf="error !== null">
+  <div class="alert alert-danger mt-5" role="alert">
+    {{error.message}}
+    <p class="d-flex justify-content-center">
+      Limpe o campo ou faça uma nova busca.
+    </p>
+  </div>
+</div>

@@ -1,13 +1,41 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { loadCharactersRequest } from '../../shared/action/load-characters.action';
+import { FilterCharacters } from '../../shared/models/filter.interface';
+import { selectCharacters } from '../../shared/selector/load-characters.selector';
+import { Character } from '../../shared/models/character.interface';
 
 @Component({
   selector: 'app-character-detail',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './character-detail.component.html',
-  styleUrl: './character-detail.component.scss'
+  styleUrls: ['./character-detail.component.scss'],
 })
-export class CharacterDetailComponent {
+export class CharacterDetailComponent implements OnInit {
+  public character$ = this.store.pipe(select(selectCharacters));
+  public character!: any;
+  public error: any;
 
+  constructor(private store: Store, private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.fetchCharacterDetail(parseInt(id, 10));
+    }
+  }
+
+  fetchCharacterDetail(id: number): void {
+    this.store.dispatch(
+      loadCharactersRequest({ params: { id } as FilterCharacters })
+    );
+    this.character$.subscribe((data) => {
+      this.character = data.characters;
+      this.error = data.error;
+    });
+  }
 }
