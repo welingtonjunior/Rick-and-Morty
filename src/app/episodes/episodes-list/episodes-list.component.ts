@@ -6,11 +6,12 @@ import { Store, select } from '@ngrx/store';
 import { loadEpisodesRequest } from '../../shared/action/load-episodes.action';
 import { selectEpisodes } from '../../shared/selector/load-episodes.selector';
 import { ErrorApi } from '../../shared/models/error-api.interface';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @Component({
   selector: 'app-episodes-list',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, CommonModule],
+  imports: [ReactiveFormsModule, FormsModule, CommonModule, InfiniteScrollModule],
   templateUrl: './episodes-list.component.html',
   styleUrl: './episodes-list.component.scss',
 })
@@ -40,7 +41,6 @@ export class EpisodesListComponent  {
       this.currentPage = data.info?.page || 1;
       this.loading = data.loading
       this.error = data.error
-      console.log('data episode', data.episodes)
     }
     )
   }
@@ -58,4 +58,11 @@ export class EpisodesListComponent  {
   public previousPage(): void {
     this.goToPage(this.currentPage - 1);
   }
+  public onScroll(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.fetchEpisodes(this.currentPage);
+    }
+  }
+
 }

@@ -6,6 +6,7 @@ import { SearchBarComponent } from '../../shared/components/search-bar/search-ba
 import { Store, select } from '@ngrx/store';
 import { selectCharacters } from '../../shared/selector/load-characters.selector';
 import { loadCharactersRequest } from '../../shared/action/load-characters.action';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @Component({
   selector: 'app-character-list',
@@ -17,6 +18,7 @@ import { loadCharactersRequest } from '../../shared/action/load-characters.actio
     RouterModule,
     RouterLink,
     SearchBarComponent,
+    InfiniteScrollModule
   ],
   templateUrl: './character-list.component.html',
   styleUrls: ['./character-list.component.scss'],
@@ -62,5 +64,13 @@ export class CharacterListComponent {
   public previousPage(): void {
     this.goToPage(this.currentPage - 1);
   }
+
+  public onScroll(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.fetchCharacters(this.currentPage);
+    }
+  }
+
 }
 
