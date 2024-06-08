@@ -20,7 +20,7 @@ export class AppComponent {
     this.handleLoading()
   }
 
-  handleLoading(): void {
+  private handleLoading(): void {
     this.dataCharacters$.subscribe(data =>
       this.loading = data.loading
     )

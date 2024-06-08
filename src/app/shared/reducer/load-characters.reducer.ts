@@ -1,3 +1,4 @@
+// load-characters.reducer.ts
 import { createReducer, on } from '@ngrx/store';
 import {
   loadCharactersFailure,

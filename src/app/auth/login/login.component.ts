@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  login() {
+  protected login(): void {
     const username = this.formLogin.get('username')?.value;
     const password = this.formLogin.get('password')?.value;
 

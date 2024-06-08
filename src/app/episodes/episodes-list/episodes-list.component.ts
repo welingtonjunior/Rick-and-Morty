@@ -5,6 +5,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
 import { loadEpisodesRequest } from '../../shared/action/load-episodes.action';
 import { selectEpisodes } from '../../shared/selector/load-episodes.selector';
+import { ErrorApi } from '../../shared/models/error-api.interface';
 
 @Component({
   selector: 'app-episodes-list',
@@ -20,7 +21,7 @@ export class EpisodesListComponent  {
   public currentPage = 1;
   public totalPages = 1;
   public visiblePages: number[] = [];
-  public error: any;
+  public error!: ErrorApi;
 
   constructor(private store: Store) {
     this.fetchEpisodes()
@@ -28,38 +29,33 @@ export class EpisodesListComponent  {
   }
   
 
-  fetchEpisodes(page: number = 1): void {
+  private fetchEpisodes(page: number = 1): void {
     this.store.dispatch(loadEpisodesRequest({ page: page }));
   }
 
-  handleEpisodes(){
+  private handleEpisodes(): void {
     this.episodes$.subscribe(data =>{
       this.episodes = data.episodes
       this.totalPages = data.info?.pages || 1;
       this.currentPage = data.info?.page || 1;
       this.loading = data.loading
       this.error = data.error
+      console.log('data episode', data.episodes)
     }
     )
   }
-  updateVisiblePages(): void {
-    const maxVisiblePages = 4;
-    const startPage = Math.max(1, Math.min(this.currentPage - Math.floor(maxVisiblePages / 2), this.totalPages - maxVisiblePages + 1));
-    this.visiblePages = Array.from({ length: Math.min(maxVisiblePages, this.totalPages) }, (_, index) => startPage + index);
-  }
-  
-  goToPage(page: number): void {
+  public goToPage(page: number): void {
     if (page !== this.currentPage && page > 0 && page <= this.totalPages) {
       this.currentPage = page;
       this.fetchEpisodes(page);
     }
   }
-  
-  nextPage(): void {
+
+  public nextPage(): void {
     this.goToPage(this.currentPage + 1);
   }
-  
-  previousPage(): void {
+
+  public previousPage(): void {
     this.goToPage(this.currentPage - 1);
   }
 }

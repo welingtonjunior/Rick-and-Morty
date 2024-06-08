@@ -1,6 +1,7 @@
 import { createAction, props } from "@ngrx/store";
 import { FilterCharacters } from "../models/filter.interface";
-import { ApiResponse } from "../models/character.interface";
+import { ApiResponse, Character, Info } from "../models/character.interface";
+import { ErrorApi } from "../models/error-api.interface";
 
 export const loadCharactersRequest = createAction(
     '[Characters] - Load Characters Request',

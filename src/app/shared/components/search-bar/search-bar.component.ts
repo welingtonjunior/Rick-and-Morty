@@ -21,10 +21,6 @@ import { selectEpisodes } from '../../selector/load-episodes.selector';
 })
 export class SearchBarComponent implements OnInit {
   public search = new FormControl('');
-  public characters$ = this.store.pipe(select(selectCharacters));
-  public episodes$ = this.store.pipe(select(selectEpisodes));
-  public characters: any;
-  public episodes: any[] = [];
   public placeholderText!: string;
   public auth!: boolean;
   public searchTerm: string = '';
@@ -36,7 +32,6 @@ export class SearchBarComponent implements OnInit {
     private store: Store
   ) {
     this.initializeSearchListener();
-    this.handleDataOptions();
     this.auth = this.authService.isAuthenticatedUser();
   }
 
@@ -52,7 +47,7 @@ export class SearchBarComponent implements OnInit {
     });
   }
 
-  updatePlaceholderText(url: string): void {
+  private updatePlaceholderText(url: string): void {
     if (url === '/characters') {
       this.placeholderText = 'Digite o nome do personagem';
     } else if (url === '/episodes') {
@@ -62,17 +57,8 @@ export class SearchBarComponent implements OnInit {
     } else this.placeholderText = 'Acesse alguma das listas';
   }
 
-  handleDataOptions(): void {
-    if (this.auth) {
-      this.characters$.subscribe((data) => (this.characters = data.characters));
-      this.episodes$.subscribe((data) => {
-        this.episodes = data.episodes;
-        this.loading = data.loading;
-      });
-    }
-  }
 
-  initializeSearchListener(): void {
+   private initializeSearchListener(): void {
     this.search.valueChanges
       .pipe(debounceTime(300))
       .subscribe((name: string | null) => {

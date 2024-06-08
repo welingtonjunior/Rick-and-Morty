@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { FilterCharacters } from '../../shared/models/filter.interface';
+import { ApiResponse, Character } from '../../shared/models/character.interface';
 
 @Injectable({
   providedIn: 'root',

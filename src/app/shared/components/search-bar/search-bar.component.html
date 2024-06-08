@@ -9,10 +9,6 @@
         [disabled]="!auth"
         [(ngModel)]="searchTerm" 
       >
-      <datalist id="charactersList">
-        <option *ngFor="let character of characters" [value]="character.name"></option>
-        <option *ngFor="let episode of episodes" [value]="episode.name"></option>
-      </datalist>
     </form>
   </div>
 </nav>

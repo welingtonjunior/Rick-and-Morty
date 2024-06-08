@@ -1,5 +1,4 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Action } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import { ApiService } from '../../core/services/api.service';
 import {
@@ -8,6 +7,7 @@ import {
   loadCharactersSuccess,
 } from '../action/load-characters.action';
 import { catchError, map, mergeMap, of } from 'rxjs';
+import { ApiResponse } from '../models/character.interface';
 
 @Injectable()
 export class CharactersEffects {
