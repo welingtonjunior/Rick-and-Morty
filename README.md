@@ -30,10 +30,12 @@ Siga os passos abaixo para instalar e executar o projeto localmente:
    cd rick-and-morty-dashboard
 
 2. **Instale as dependências:**
-    ```npm install
+    ```sh
+    npm install
     
 3. **Execute a aplicação:**
-    ```ng serve
+    ```sh
+    ng serve
 
 4. **Acesse a aplicação:**
     Abra o navegador e vá para http://localhost:4200
@@ -79,15 +81,18 @@ A estrutura do projeto está organizada de acordo com style guide: https://angul
 
 - O usuário faz login utilizando as credenciais fornecidas.
 A autenticação é gerenciada pelo auth.service.ts.
-Carregamento de Dados:
+
+# Carregamento de Dados:
 
 - A aplicação utiliza o api.service.ts para buscar dados da API do Rick and Morty.
 A busca por personagens e episódios é feita através da barra de busca (search-bar.component.ts).
-Gerenciamento de Estado:
+
+# Gerenciamento de Estado:
 
 - As ações (definidas em load-characters.action.ts) disparam eventos que são gerenciados pelos efeitos (characters.effects.ts) e redutores (load-characters.reducer.ts).
 O estado da aplicação é selecionado usando selectors (load-characters.selector.ts).
-Navegação:
+
+ # Navegação:
 
 - A aplicação utiliza roteamento do Angular para navegar entre páginas de personagens e episódios.
 A paginação permite ao usuário navegar entre diferentes páginas de resultados.
