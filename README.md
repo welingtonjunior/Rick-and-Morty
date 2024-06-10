@@ -19,6 +19,8 @@ Este projeto é um dashboard que permite aos usuários buscar e visualizar infor
 - **Paginação**: Navegação entre páginas de resultados.
 - **Gerenciamento de Estado**: Utilização do NgRx para gerenciar o estado da aplicação.
 - **Programação Reativa**: Uso de RxJS para lidar com eventos assíncronos.
+- **Scroll Infinito**: Carregamento contínuo de personagens conforme o usuário rola a página.
+
 
 ## Instalação e Execução
 
@@ -97,6 +99,10 @@ O estado da aplicação é selecionado usando selectors (load-characters.selecto
 - A aplicação utiliza roteamento do Angular para navegar entre páginas de personagens e episódios.
 A paginação permite ao usuário navegar entre diferentes páginas de resultados.
 
+# Scroll Infinito
+
+- A aplicação implementa scroll infinito para carregar mais personagens à medida que o usuário rola a página para baixo. Esta funcionalidade melhora a experiência do usuário, permitindo uma navegação contínua sem a necessidade de clicar em botões de paginação.
+ 
 # Estilização
 
 - A aplicação utiliza o Bootstrap para estilização responsiva e para componentes de UI
