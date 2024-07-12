@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store, select } from '@ngrx/store';
-import { loadCharactersRequest } from '../../shared/action/load-characters.action';
-import { FilterCharacters } from '../../shared/models/filter.interface';
-import { selectCharacters } from '../../shared/selector/load-characters.selector';
-import { ErrorApi } from '../../shared/models/error-api.interface';
-import { CharacterDetails } from '../../shared/models/character-details.interface';
+import { loadDetailsRequest } from '../../shared/action/load-characters.action';
+import { Subscription } from 'rxjs';
+import { CharacterDetails } from '../../shared/models/character.interface';
+import { selectDetails } from '../../shared/selector/load-details.selector';
+import { loadDetailsState } from '../../shared/reducer/load-details.reducer';
+import { ErrorApi } from '../../shared/models/episodes.interface';
 
 @Component({
   selector: 'app-character-detail',
@@ -15,29 +16,38 @@ import { CharacterDetails } from '../../shared/models/character-details.interfac
   templateUrl: './character-detail.component.html',
   styleUrls: ['./character-detail.component.scss'],
 })
-export class CharacterDetailComponent implements OnInit {
-  public character$ = this.store.pipe(select(selectCharacters));
-  public character!: any;
-  public error: any;
+export class CharacterDetailComponent implements OnInit, OnDestroy {
+  public character$ = this.store.pipe(select(selectDetails));
+  public character!: CharacterDetails;
+  public error!: ErrorApi;
+  public loading: boolean = false;
+  private charactersDetailsSubscription!: Subscription;
 
-  constructor(private store: Store, private route: ActivatedRoute) {}
+  constructor(private store: Store, private route: ActivatedRoute) {
+
+  }
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.fetchCharacterDetail(parseInt(id, 10));
+      const idAsNumber = Number(id);
+      this.store.dispatch(
+        loadDetailsRequest({id: idAsNumber  })
+      );
+
+      this.charactersDetailsSubscription = this.character$.subscribe((response: loadDetailsState) => {
+        this.character = response.data
+        this.loading = response.loading
+        this.error = response.error
+      });
     }
-    console.log('character detail', this.character$)
+  }
+  ngOnDestroy(): void {
+    if (this.charactersDetailsSubscription) {
+      this.charactersDetailsSubscription.unsubscribe();
+    }
   }
 
-  private fetchCharacterDetail(id: number): void {
-    this.store.dispatch(
-      loadCharactersRequest({ params: { id } as FilterCharacters })
-    );
-    this.character$.subscribe((data) => {
-      this.character = data.characters;
-      this.error = data.error;
-      console.log('character == >', data.characters)
-    });
-  }
+  
 }

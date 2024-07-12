@@ -1,33 +1,33 @@
-// load-characters.reducer.ts
+
 import { createReducer, on } from '@ngrx/store';
 import {
   loadCharactersFailure,
   loadCharactersRequest,
   loadCharactersSuccess,
 } from '../action/load-characters.action';
+import { Character, CharacterApi } from '../models/character.interface';
+import { ErrorApi } from '../models/episodes.interface';
 
 export interface loadCharactersState {
-  characters: any;
-  error: any;
-  info: any;
+  data: CharacterApi | Character;
+  error: Partial<ErrorApi> | null;
   loading: boolean;
 }
 
 export const initialState: loadCharactersState = {
-  characters: [],
+  data: null,
   loading: false,
   error: null,
-  info: null,
 };
 
 export const charactersReducer = createReducer(
   initialState,
-  on(loadCharactersSuccess, (state, { characters, info }) => ({
+  on(loadCharactersSuccess, (state, { data }) => ({
     ...state,
-    characters,
+    data,
     loading: false,
     error: null,
-    info,
+  
   })),
   on(loadCharactersFailure, (state, { error }) => ({
     ...state,

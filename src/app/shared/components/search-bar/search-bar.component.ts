@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, filter } from 'rxjs/operators';
-import { FilterCharacters } from '../../models/filter.interface';
+import { debounceTime } from 'rxjs/operators';
+import { FilterCharactersParams } from '../../models/filter-characters.interface';
 import { CommonModule } from '@angular/common';
 import { NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '../../../auth/auth.service';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { loadCharactersRequest } from '../../action/load-characters.action';
-import { selectCharacters } from '../../selector/load-characters.selector';
 import { loadEpisodesRequest } from '../../action/load-episodes.action';
-import { FilterEpisodes } from '../../models/filter-episodes.interface';
-import { selectEpisodes } from '../../selector/load-episodes.selector';
+import { FilterEpisodesParams } from '../../models/filter-episodes.interface';
 
 @Component({
   selector: 'app-search-bar',
@@ -67,12 +65,12 @@ export class SearchBarComponent implements OnInit {
         if (currentUrl === '/characters') {
           this.store.dispatch(
             loadCharactersRequest({
-              params: { name } as FilterCharacters,
+              params: { name } as FilterCharactersParams,
             })
           );
         } else if (currentUrl === '/episodes') {
           this.store.dispatch(
-            loadEpisodesRequest({ params: { name } as FilterEpisodes })
+            loadEpisodesRequest({ params: { name } as FilterEpisodesParams })
           );
         }
       });

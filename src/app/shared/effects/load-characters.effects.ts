@@ -5,9 +5,13 @@ import {
   loadCharactersFailure,
   loadCharactersRequest,
   loadCharactersSuccess,
+  loadDetailsFailure,
+  loadDetailsRequest,
+  loadDetailsSuccess,
 } from '../action/load-characters.action';
 import { catchError, map, mergeMap, of } from 'rxjs';
-import { ApiResponse } from '../models/character.interface';
+import { ApiResponse, Character } from '../models/character.interface';
+
 
 @Injectable()
 export class CharactersEffects {
@@ -18,10 +22,23 @@ export class CharactersEffects {
       ofType(loadCharactersRequest),
       mergeMap(action =>
         this.apiService.getCharacters(action.params, action.page).pipe(
-          map(data => loadCharactersSuccess({ characters: data.results ? data.results : data, info: data.info })),
+          map(data => loadCharactersSuccess({ data: data })),
           catchError(error => of(loadCharactersFailure({ error })))
         )
       )
     )
   );
+
+  loadDetails$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(loadDetailsRequest),
+      mergeMap(action =>
+        this.apiService.getCharacterById(action.id).pipe(
+          map((data: Character) => loadDetailsSuccess({ data })),
+          catchError(error => of(loadDetailsFailure({ error })))
+        )
+      )
+    )
+  );
+
 }

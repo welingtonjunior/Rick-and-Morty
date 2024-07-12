@@ -1,64 +1,33 @@
 <section
   infiniteScroll
   [infiniteScrollDistance]="2"
-  [infiniteScrollThrottle]="150"
+  [infiniteScrollThrottle]="300"
   (scrolled)="onScroll()"
 >
-<div class="container" *ngIf="!error">
+  <div class="container">
     <div class="row justify-content-center">
       <div class="col-12 d-flex flex-wrap justify-content-center">
-        @for (episode of episodes; track $index) {
-        <div
-          class="card mb-3"
-          style="width: 13rem; margin: 10px"
-        >
+        @if (episodes$) { 
+          @for (episode of episodes$;
+        track $index) {
+        <div class="card mb-3" style="width: 13rem; margin: 10px">
           <div class="card-body">
-            <h5 class="card-title">{{ episode.name }}</h5>
-            <p class="card-text">Date: {{ episode.air_date }}</p>
-            <p class="card-text">Episode: {{ episode.episode }}</p>
-            <p class="card-text">Create: {{ episode.created }}</p>
+            <h5 class="card-title">{{ episode?.name }}</h5>
+            <p class="card-text">Date: {{ episode?.airData }}</p>
+            <p class="card-text">Episode: {{ episode?.episode }}</p>
+            <p class="card-text">Create: {{ episode?.created }}</p>
           </div>
         </div>
-        }
+      }
+         }
       </div>
     </div>
   </div>
-  <div *ngIf="!error && !loading" class="pagination-container">
-    <nav aria-label="Page navigation">
-      <ul class="pagination justify-content-center">
-        <li class="page-item" [class.disabled]="currentPage === 1">
-          <button
-            class="page-link"
-            (click)="previousPage()"
-            [disabled]="currentPage === 1"
-          >
-            Anterior
-          </button>
-        </li>
-        <li
-          *ngFor="let page of visiblePages"
-          class="page-item"
-          [class.active]="page === currentPage"
-        >
-          <button class="page-link" (click)="goToPage(page)">{{ page }}</button>
-        </li>
-        <li class="page-item" [class.disabled]="currentPage === totalPages">
-          <button
-            class="page-link"
-            (click)="nextPage()"
-            [disabled]="currentPage === totalPages"
-          >
-            Próximo
-          </button>
-        </li>
-      </ul>
-    </nav>
-  </div>
 </section>
 
-<div *ngIf="error !== null">
+<div *ngIf="error">
   <div class="alert alert-danger mt-5" role="alert">
-    {{error.message}}
+    {{ error.message }}
     <p class="d-flex justify-content-center">
       Limpe o campo ou faça uma nova busca.
     </p>

@@ -1,19 +1,33 @@
 import { createAction, props } from "@ngrx/store";
-import { FilterCharacters } from "../models/filter.interface";
-import { ApiResponse, Character, Info } from "../models/character.interface";
-import { ErrorApi } from "../models/error-api.interface";
+import { FilterCharacters, FilterCharactersParams } from "../models/filter-characters.interface";
+import { Character, ApiResponse, CharacterApi, CharacterDetails } from "../models/character.interface";
 
 export const loadCharactersRequest = createAction(
     '[Characters] - Load Characters Request',
-    props<{ params?: FilterCharacters, page?: number }>()
+    props<{ params?: FilterCharactersParams, page?: number }>()
 );
 
 export const loadCharactersSuccess = createAction(
     '[Characters] - Load Characters Success',
-    props<{ characters: any, info: any }>()
-)
+    props<{ data: CharacterApi}>()
+);
 
 export const loadCharactersFailure = createAction(
     '[Characters] - Load Characters Failure',
     props<{error: any }>()
-)
+);
+
+export const loadDetailsRequest = createAction(
+    '[Details] - Load Details Request',
+    props<{ id: number }>()
+);
+
+export const loadDetailsSuccess = createAction(
+    '[Details] - Load Details Success',
+    props<{ data: CharacterDetails }>()
+);
+
+export const loadDetailsFailure = createAction(
+    '[Details] - Load Details Failure',
+    props<{error: any }>()
+);

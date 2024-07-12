@@ -1,12 +1,15 @@
-<nav class="navbar navbar-expand-lg" >
+<nav class="navbar navbar-expand-lg">
   <div class="container-fluid">
-    @if (loading) {
-    <div class="spinner-border navbar-brand text-light" role="status">
+    <div
+      *ngIf="loading"
+      class="spinner-border navbar-brand text-light"
+      role="status"
+    >
       <span class="sr-only"></span>
     </div>
-    }@else {
-      <a class="navbar-brand logo" routerLink="/home">Rick and Morty</a>
-    }
+    <a *ngIf="!loading" class="navbar-brand logo" routerLink="/home"
+      >Rick and Morty</a
+    >
 
     <button
       class="navbar-toggler"
@@ -22,21 +25,122 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="" routerLink="/characters"
-            >Lista de Personagens</a
-          >
+          <a class="nav-link" routerLink="/characters">Lista de Personagens</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="" routerLink="/episodes"
-            >Lista de Episódios</a
-          >
+          <a class="nav-link" routerLink="/episodes">Lista de Episódios</a>
         </li>
 
         <app-search-bar></app-search-bar>
+
+        <button *ngIf="crrRoute" type="button" class="btn btn-info" (click)="openFilter()">
+          Filtro
+        </button>
       </ul>
     </div>
   </div>
 </nav>
+
 <div class="router">
   <router-outlet></router-outlet>
 </div>
+<ng-container *ngIf="visibleFilter">
+  <div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Filtro</h5>
+          <button
+            type="button"
+            class="btn-close"
+            (click)="closeFilter()"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <form [formGroup]="formFilter" (ngSubmit)="onSubmit()">
+              <div class="row mb-3">
+                <div class="col-md-4">
+                  <label for="name" class="filter__form__label">Nome</label>
+                  <input
+                    id="name"
+                    formControlName="name"
+                    class="form-control"
+                    placeholder="Digite o nome do personagem"
+                    list="character-names"
+                  />
+                  <datalist id="character-names">
+                    <option
+                      *ngFor="let character of characters"
+                      [value]="character.name"
+                    ></option>
+                  </datalist>
+                </div>
+                <div class="col-md-4">
+                  <label for="status" class="filter__form__label">Status</label>
+                  <input
+                    id="status"
+                    formControlName="status"
+                    class="form-control"
+                    placeholder="Digite o status"
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label for="species" class="filter__form__label"
+                    >Espécie</label
+                  >
+                  <input
+                    id="species"
+                    formControlName="species"
+                    class="form-control"
+                    placeholder="Digite a espécie"
+                  />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-4">
+                  <label for="type" class="filter__form__label">Tipo</label>
+                  <input
+                    id="type"
+                    formControlName="type"
+                    class="form-control"
+                    placeholder="Digite o tipo"
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label for="gender" class="filter__form__label">Gênero</label>
+                  <input
+                    id="gender"
+                    formControlName="gender"
+                    class="form-control"
+                    placeholder="Digite o gênero"
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label for="id" class="filter__form__label">ID</label>
+                  <input
+                    id="id"
+                    formControlName="id"
+                    class="form-control"
+                    placeholder="Digite o ID"
+                  />
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Filtrar</button>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="closeFilter()"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../../core/services/api.service';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { loadEpisodesRequest } from '../../shared/action/load-episodes.action';
 import { selectEpisodes } from '../../shared/selector/load-episodes.selector';
-import { ErrorApi } from '../../shared/models/error-api.interface';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { Episodes, EpisodesType } from '../../shared/models/episodes.interface';
+import { loadEpisodesState } from '../../shared/reducer/load-episodes.reducer';
 
 @Component({
   selector: 'app-episodes-list',
@@ -15,51 +15,31 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
   templateUrl: './episodes-list.component.html',
   styleUrl: './episodes-list.component.scss',
 })
-export class EpisodesListComponent  {
-  public episodes: any[] = [];
-  public episodes$ = this.store.pipe(select(selectEpisodes));
+export class EpisodesListComponent implements OnInit{
+  public episodes$: EpisodesType;
   public loading: boolean = false;
   public currentPage = 1;
   public totalPages = 1;
   public visiblePages: number[] = [];
-  public error!: ErrorApi;
+  public error!: Error;
 
   constructor(private store: Store) {
     this.fetchEpisodes()
-    this.handleEpisodes()
+    
   }
-  
+  ngOnInit(): void {
+    this.store.select(selectEpisodes).subscribe({
+      next: (state: loadEpisodesState) => this.episodes$ = state.data?.results || null,
+      error: (state: loadEpisodesState) => this.error = state.error
+    });
+  }
 
   private fetchEpisodes(page: number = 1): void {
     this.store.dispatch(loadEpisodesRequest({ page: page }));
   }
 
-  private handleEpisodes(): void {
-    this.episodes$.subscribe(data =>{
-      this.episodes = data.episodes
-      this.totalPages = data.info?.pages || 1;
-      this.currentPage = data.info?.page || 1;
-      this.loading = data.loading
-      this.error = data.error
-    }
-    )
-  }
-  public goToPage(page: number): void {
-    if (page !== this.currentPage && page > 0 && page <= this.totalPages) {
-      this.currentPage = page;
-      this.fetchEpisodes(page);
-    }
-  }
-
-  public nextPage(): void {
-    this.goToPage(this.currentPage + 1);
-  }
-
-  public previousPage(): void {
-    this.goToPage(this.currentPage - 1);
-  }
   public onScroll(): void {
-    if (this.currentPage < this.totalPages) {
+    if (this.currentPage < this.totalPages && !this.loading) {
       this.currentPage++;
       this.fetchEpisodes(this.currentPage);
     }

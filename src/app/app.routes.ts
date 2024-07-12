@@ -16,7 +16,6 @@ export const routes: Routes = [
       import('./characters/character-list/character-list.component').then(
         (c) => c.CharacterListComponent
       ),
-
     canActivate: [AuthGuard],
   },
   {
@@ -30,14 +29,23 @@ export const routes: Routes = [
   {
     path: 'characters/details/:id',
     loadComponent: () =>
-      import('./characters/character-detail/character-detail.component')
-        .then((c) => c.CharacterDetailComponent),
-        canActivate: [AuthGuard],
+      import('./characters/character-detail/character-detail.component').then(
+        (c) => c.CharacterDetailComponent
+      ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'login',
     loadComponent: () =>
       import('./auth/login/login.component').then((c) => c.LoginComponent),
   },
+  {
+    path: 'not-found',
+    loadComponent: () =>
+      import('./shared/components/not-found/not-found.component').then(
+        (c) => c.NotFoundComponent
+      ),
+  },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '**', redirectTo: '/not-found' }
 ];

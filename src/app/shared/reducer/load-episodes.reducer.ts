@@ -1,29 +1,26 @@
 import { createReducer, on } from '@ngrx/store';
 import { loadEpisodesFailure, loadEpisodesRequest, loadEpisodesSuccess } from '../action/load-episodes.action';
-import { loadCharactersFailure } from '../action/load-characters.action';
+import { EpisodesApi } from '../models/episodes.interface';
 
 export interface loadEpisodesState {
-  episodes: any[];
+  data: EpisodesApi | null;
   error: any;
-  info: any;
   loading: boolean;
 }
 
 export const initialStateEpisodes: loadEpisodesState = {
-  episodes: [],
-  info: null,
+  data: null,
   error: null,
   loading: false,
 };
 
 export const episodesReducer = createReducer(
   initialStateEpisodes,
-  on(loadEpisodesSuccess, (state, { episodes, info }) => ({
+  on(loadEpisodesSuccess, (state, { data}) => ({
     ...state,
-    episodes,
+    data,
     loading: false,
     error: null,
-    info,
   })),
   on(loadEpisodesFailure, (state, { error }) => ({
     ...state,

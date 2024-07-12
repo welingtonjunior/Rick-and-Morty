@@ -6,21 +6,19 @@ import {
   loadEpisodesRequest,
   loadEpisodesSuccess,
 } from '../action/load-episodes.action';
-import { catchError, map, mergeMap, of } from 'rxjs';
+import { catchError, map, mergeMap, of, switchMap } from 'rxjs';
 
 @Injectable()
-export class LoadEpisodesEffects$ {
+export class LoadEpisodesEffects {
   constructor(private actions$: Actions, private apiService: ApiService) {}
 
   loadEpisodes$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadEpisodesRequest),
-      mergeMap(action =>
+      switchMap((action) =>
         this.apiService.getEpisodes(action.params, action.page).pipe(
-          map(data =>
-            loadEpisodesSuccess({ episodes: data.results, info: data.info })
-          ),
-          catchError(error => of(loadEpisodesFailure({ error })))
+          map((data) => loadEpisodesSuccess({ data: data })),
+          catchError((error) => of(loadEpisodesFailure({ error })))
         )
       )
     )

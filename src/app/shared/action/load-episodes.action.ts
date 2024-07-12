@@ -1,14 +1,15 @@
 import { createAction, props } from "@ngrx/store";
-import { FilterEpisodes } from "../models/filter-episodes.interface";
+import { FilterEpisodesParams } from "../models/filter-episodes.interface";
+import { EpisodesApi } from "../models/episodes.interface";
 
 export const loadEpisodesRequest = createAction(
     '[Episodes] - Load Episodes Request',
-    props<{ params?: FilterEpisodes, page?: number}>()
+    props<{ params?: FilterEpisodesParams, page?: number}>()
 );
 
 export const loadEpisodesSuccess = createAction(
     '[Episodes] - Load Episodes Success',
-    props<{ episodes: any[], info: any}>()
+    props<{ data: EpisodesApi }>()
 );
 
 export const loadEpisodesFailure = createAction(

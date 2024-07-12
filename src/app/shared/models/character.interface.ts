@@ -1,7 +1,10 @@
+import { ErrorApi } from "./episodes.interface";
+import { Option } from "./global.types"
 
 export interface ApiResponse {
   info: Info;
   results: Character[];
+  error: ErrorApi
 }
 
 export interface Character {
@@ -33,7 +36,8 @@ export interface Info {
 }
 
 
-export interface ErrorApi {
-  message: string;
-  status: number;
-}
+export type CharacterApi = Option<ApiResponse>
+
+export type CharacterDetails = Option<Character>
+
+export type CharacterList = Option<Character[]>
